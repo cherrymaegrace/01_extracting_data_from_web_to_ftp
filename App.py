@@ -36,8 +36,8 @@ def upload_to_ftp(ftp: FTP_TLS, file_source: Path):
 def delete_csv(file_source: str | Path):
     remove(file_source)
 
-if __name__ == "__main__":
-    # Load source config
+def pipeline():
+# Load source config
     with open("config.json","rb") as fp:
         config = json.load(fp)
 
@@ -59,5 +59,22 @@ if __name__ == "__main__":
         # Delete files
         delete_csv(file_name)
         print(f"Successfully deleted {file_name}.")
-    
+
+if __name__ == "__main__":
+
+    # Option for scheduling pipeline run
+    run_manual = sys.argv[1];
+
+    if run_manual.lower() == "true":
+        pipeline()
+
+    elif run_manual.lower() == "false":
+        schedule.every().day.at("23:00").do(pipeline())
+
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+
+    else:
+        print("Invalid parameter. The app will not run.")
     
