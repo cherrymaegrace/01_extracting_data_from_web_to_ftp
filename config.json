@@ -7,6 +7,7 @@
                 "name",
                 "type",
                 "program",
+                "title",
                 "call_sign",
                 "vessel_type",
                 "tonnage",
