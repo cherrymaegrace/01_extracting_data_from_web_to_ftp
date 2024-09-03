@@ -31,6 +31,7 @@ def read_csv(config: dict) -> pd.DataFrame:
 
 def upload_to_ftp(ftp: FTP_TLS, file_source: Path):
     with open(file_source, "rb") as fp:
+        ftp.cwd('./ftp/new')
         ftp.storbinary(f"STOR {file_source.name}", fp)
 
 def delete_csv(file_source: str | Path):
